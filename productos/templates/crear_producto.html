@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Crear Producto {% endblock %}
+
+{% block content%}
+<body>
+<head>
+<link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+</head>
+{% comment %} {{perms.producto}} {% endcomment %}
+{% if perms.reservas.add_producto %}
+<h2>Crear Producto</h2>
+<div class="form">
+    <form action="{% url 'guardar-producto' %}" method="POST">
+        {% csrf_token %}
+        <label for="nombre">Nombre</label><br>
+        <input type="text" name="nombre" id="nombre">
+        {% if data %}
+        <p style = "color: red;">{{data}}</p>
+        {% endif %}
+        <br>
+        <label for="descripcion">Descripción</label><br>
+        <textarea name="descripcion" id="descripcion" cols="73" rows="30"></textarea>
+        <br>
+        <label for="precio">Precio</label><br>
+        <input type="number" name="precio" id="precio" min="0">
+        <br>
+        <label for="categoria">Categoria : </label>
+        <select name="categoria" id="categoria">
+            <option value="WHISKY">WHISKY</option>
+            <option value="RON">RON</option>
+            <option value="GINEBRA">GINEBRA</option>
+            <option value="VODKA">VODKA</option>
+            <option value="SIN ALCOHOL">SIN ALCOHOL</option>
+        </select>
+        <br>
+        <br>
+        <button type="submit" value="Guardar">Guardar</button>
+    </form>
+</div>
+    {% else %}
+        <p>No tienes permisos</p> 
+ {% endif %} 
+ </body>
+{% endblock %}

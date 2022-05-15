@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% block title %} RM|Carta {% endblock %}
+{% load static %}
+{% block content%}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+
+    <style>
+        .contenedor-mensaje {
+            border: 1px solid seagreen;
+            padding: 20px;
+            margin: 10px;
+            overflow: auto;
+        }
+
+        .encabezado-mensaje {
+            text-align: center;
+            font-size: 22px;
+        }
+
+        .cuerpo-mensaje {
+            border-radius: 3px;
+            border: 1px dotted seagreen;
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mensaje{
+            overflow: auto;
+        }
+
+        .fecha{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+{% if user.is_staff %}
+{% if contactos%}
+{% for contacto in contactos %}
+<div class="contenedor-mensaje">
+    <p class="encabezado-mensaje">
+        {{contacto.nombre}} - {{contacto.correo}}
+    </p>
+    <br />
+    <div class="cuerpo-mensaje">
+        <div class="mensaje">
+            {{contacto.mensaje}}
+        </div>
+        <br/>
+        <div class="fecha">
+            {{contacto.fecha_mensaje}}
+        </div>
+        <hr/>
+        <a href="{% url 'borrar-mensaje' contacto.id%}"><button>Eliminar</button></a> <br/><br/>
+        <a href="{% url 'respuestas' contacto.correo%}"><button >Responder</button></a>
+    </div>
+    <!-- <button>Responder</button>
+    <div class="form" style="border: solid 1px seagreen; padding: 10px;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="">Asunto</label>
+            <input type="text" name="asunto" />
+            <br>
+            <label for="">Email</label>
+            <br>
+            <input type="email" name="email" />
+            <br>
+            <label for="">Mensaje</label>
+            <input type="textarea" name="mensaje" />
+            <br />
+            <button type="submit" value="">Enviar</button>
+        </form>
+    </div> -->
+</div>
+{% endfor %}
+{% else %}
+<p>Aun no tienes mensajes</p>
+{% endif %}
+
+{% else %}
+Sin permisos
+{% endif %}
+</body>
+{% endblock %}

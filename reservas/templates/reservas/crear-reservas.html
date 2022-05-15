@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Crear Producto {% endblock %}
+
+{% block content%}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+</head>
+
+{% comment %} {{perms.producto}} {% endcomment %}
+ <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      minDate: new Date(),
+      maxDate: '1Y',
+      showButtonPanel: true,
+      dateFormat: 'dd/mm/yy',
+      closeText: 'Cerrar',
+      prevText: '< Ant',
+      nextText: 'Sig >',
+      currentText: 'Hoy',
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+      dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+      dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+      weekHeader: 'Sm',
+      beforeShowDay: function (day) { 
+           var day = day.getDay(); 
+           if (day == 2 || day == 3 || day == 4 || day == 1 ) { 
+             return [false, "somecssclass"] 
+           } else { 
+             return [true, "someothercssclass"] 
+           } 
+         } 
+      // You can put more options here.
+
+    });
+  });
+  </script>
+<h2> Crear Reservas</h2>
+{% if mensaje%}
+<span class="notification">{{mensaje}}</span>
+{% endif %}
+
+{% if error%}
+<span class="notification_error">{{error}}</span>
+{% endif %}
+
+<div class="form">
+    
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p style="width: 90%; text-align: center;">{{user.username}}</p>
+        <button type="submit" value="Guardar">Guardar</button>
+    </form>
+</div>
+
+{% endblock %}

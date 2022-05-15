@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<head>
+{% block title %} RM|Perfil {% endblock %}
+<link rel="stylesheet" href="{% static '../static/css/formulario.css' %}"> 
+<style>
+#myDIV{
+    display: none;
+}
+.contenedor_contrasenia{
+    display: flex;
+    width: 50%;
+    
+}
+.si{
+    padding: 10px;
+    background-color: #F1F1F1;
+    border-radius: 4px;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: large;
+    border: dotted 1px black;
+
+}
+
+.candado{
+  width: 50px;
+  padding: 4px;
+  text-align: center;
+  align-content: center;
+}
+.g{
+  background: green;
+}
+
+.c{
+  background: red;
+}
+</style>
+</head>
+<body>
+    
+    <h1>Hola {{user.username}}, ¿tienes alguna duda sobre tu perfil o quieres eliminar tu cuenta? </h1> 
+    <a href="{% url 'contacto' %}"><div class="si">Si</div></a><br/>
+    <a href="{% url 'modificar-perfil' user.id %}"><div class="si"> MODIFICAR MI PERFIL </div> </a><br/>
+    <a href="{% url 'cambiar-contrasenia' %}"><div class="si"> CAMBIAR CONTRASEÑA <i class='bx bx-lock-open-alt bx-tada' ></i></div> </a>
+</body>
+
+{% endblock content %}
+

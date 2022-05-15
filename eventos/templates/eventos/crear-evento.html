@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Crear Producto {% endblock %}
+
+{% block content%}
+<head>
+    <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+</head>
+
+{% comment %} {{perms.producto}} {% endcomment %}
+{% if perms.reservas.add_evento %}
+<h2> Crear Evento</h2>
+<div class="form">
+    <form action="{% url 'guardar-evento' %}"enctype="multipart/form-data" action="" method="POST" id="upload-image-form">
+        {% csrf_token %}
+        <label for="titulo">Nombre</label><br>
+        <input type="text" name="titulo" id="titulo">
+        {% if data %}
+        <p style = "color: red;">{{data}}</p>
+        {% endif %}
+        <input type="file" name="imagen">
+        <br>
+        <label for="descripcion">Descripción</label><br>
+        <textarea name="descripcion" id="descripcion" cols="73" rows="30"></textarea>
+        <br>
+        <br>
+        <button type="submit" value="Guardar">Guardar</button>
+    </form>
+</div>
+    {% else %}
+        <p>No tienes permisos</p> 
+ 
+{% endif %}
+
+ {% comment %} <div class="form" enctype="multipart/formdata">
+    <form action="" method="POST"  >
+        {% csrf_token %}
+     
+        {{ form }}
+        
+        <button type="submit" value="Submit" name="subir-imagen">Subir</button>
+    
+    </form>
+ </div> {% endcomment %}
+
+{% endblock %}

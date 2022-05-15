@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Crear Producto {% endblock %}
+
+{% block content%}
+
+<head>
+    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+
+   
+</head>
+Crear mesa
+<div class="form">
+    
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label>Nombre</label>
+        <input type="text" name="nombre"/>
+        <button type="submit" value="Guardar">Guardar</button>
+    </form>
+</div>
+
+<table>
+<tr>
+<th>Nombre</th>
+</tr>
+{% for m in mesa %}
+<tr>
+<td>{{m.nombre}}</td>
+<td><a href={% url 'eliminar-mesa' m.id %}>Eliminar</a></td>
+
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

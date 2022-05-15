@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<head>
+{% block title %} RM|Perfil {% endblock %}
+<link rel="stylesheet" href="{% static '../static/css/formulario.css' %}"> 
+<style>
+.contenedor_contrasenia{
+    display: flex;
+    width: 50%;
+    
+}
+.si{
+    padding: 10px;
+    background-color: #F1F1F1;
+    border-radius: 4px;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: large;
+    border: dotted 1px black;
+
+}
+
+.candado{
+  width: 50px;
+  padding: 4px;
+  text-align: center;
+  align-content: center;
+}
+.g{
+  background: green;
+}
+
+.c{
+  background: red;
+}
+</style>
+</head>
+<body>
+    <div class="form">
+    <form method="POST" action="" id="myDIV">
+        {% csrf_token %}
+        <br/>
+        {% if mensaje %}
+        <span class="notification">{{mensaje}}</span>
+        {% endif %}
+        {% if error %}
+        <span class="notification_error">{{error}}</span>
+        {% endif %}
+        
+        <br/>
+        Nueva contaseña
+        <input type="password" name="password" required/>
+        Repita la nueva contaseña
+        <input type="password" name="password1" required/>
+
+        <button type="submit" value="Guardar">Cambiar Contraseña</button>
+    </form>
+    </div>
+
+</body>
+
+{% endblock content %}
+

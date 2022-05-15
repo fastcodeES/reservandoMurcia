@@ -1,0 +1,212 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Reservas {% endblock %}
+{% block content%}
+
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <style>
+        .lista_reservas_unica {
+            padding: 10px;          
+        }
+        input[type="text"]{
+            width: 30%;
+            height: 50px;
+        }
+        input[type="submit"]{
+            width: 30%;
+            height: 50px;
+
+        }
+        .mesas{
+            width: 100%;
+            text-align: right;
+        }
+.cta {
+ position: relative;
+ margin: auto;
+ padding: 12px 18px;
+ transition: all 0.2s ease;
+ border: none;
+ background: none;
+}
+
+.cta:before {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ display: block;
+ border-radius: 50px;
+ background: #b1dae7;
+ width: 45px;
+ height: 45px;
+ transition: all 0.3s ease;
+}
+
+.cta span {
+ position: relative;
+ font-family: "Ubuntu", sans-serif;
+ font-size: 18px;
+ font-weight: 700;
+ letter-spacing: 0.05em;
+ color: #234567;
+}
+
+.cta svg {
+ position: relative;
+ top: 0;
+ margin-left: 10px;
+ fill: none;
+ stroke-linecap: round;
+ stroke-linejoin: round;
+ stroke: #234567;
+ stroke-width: 2;
+ transform: translateX(-5px);
+ transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+ width: 100%;
+ background: #b1dae7;
+}
+
+.cta:hover svg {
+ transform: translateX(0);
+}
+
+.cta:active {
+ transform: scale(0.95);
+}
+    </style>
+</head>
+{% if  request.user.is_staff%}
+<div class="fecha">
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" class="datepicker" name="fecha" value="" readonly/>
+        <input type="submit" value="Buscar" />
+    </form>
+</div>
+<script>
+    $(function () {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            maxDate: '1Y',
+            showButtonPanel: true,
+            dateFormat: 'dd/mm/yy',
+            closeText: 'Cerrar',
+            prevText: '< Ant',
+            nextText: 'Sig >',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            beforeShowDay: function (day) {
+                var day = day.getDay();
+                if (day == 2 || day == 3 || day == 4 || day == 1) {
+                    return [false, "somecssclass"]
+                } else {
+                    return [true, "someothercssclass"]
+                }
+            }
+            // You can put more options here.
+
+        });
+    });
+</script>
+<br />
+<hr />
+<h2 style="width: 100%; text-align:center;">Reservas</h2>
+
+<p>Número de reservas: <b> {{numero}} </b></p></div><br>
+
+<div class="mesas">
+    <button class="cta">
+
+  <a href="{% url 'crear-mesa' %}"><span>Crear Mesas</span></a>
+  <svg width="15px" height="10px" viewBox="0 0 13 10">
+    <path d="M1,5 L11,5"></path>
+    <polyline points="8 1 12 5 8 9"></polyline>
+  </svg>
+</button>
+</div>
+
+<div class="lista_reservas_unica">
+    {% if reservas %}
+    <table>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Hora
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Teléfono
+            </th>
+            <th>
+                Reservado
+            </th>
+        </tr>
+        {% for reserva in reservas %}
+        <tr>
+            <td>
+                {{reserva.id}}
+            </td>
+            <td>
+                {{reserva.username}}
+            </td>
+            <td>
+                {{reserva.fecha_reserva}}
+            </td>
+            <td>
+                {{reserva.horario}}:00
+            </td>
+            <td>
+                {{reserva.email}}
+            </td>
+            <td>
+                {{reserva.nombre}}
+            </td>
+            <td>
+                {{reserva.telefono}}
+            </td>
+            <td>
+                {{reserva.fecha}}
+            </td>
+            <th>
+                <a href="{% url 'borrar-reserva' reserva.id %}">Borrar</a>
+            </th>
+        </tr>
+
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Aun no tienes reservas</p>
+    
+    {% endif %}
+</div>
+{% else %}
+    <p>No tienes permisos</p>
+{% endif %}
+{% endblock %}

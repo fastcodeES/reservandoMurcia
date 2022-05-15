@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Reservas {% endblock %}
+{% block content%}
+
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <style>
+        .lista_reservas_unica {
+            padding: 10px;          
+        }
+        input[type="text"]{
+            width: 30%;
+            height: 50px;
+        }
+        input[type="submit"]{
+            width: 30%;
+            height: 50px;
+
+        }
+    </style>
+    
+</head>
+<div class="reserva">
+    {% if user.is_authenticated %}
+
+    <a href={% url 'reservas' %}><button class="boton-reserva">Reservar</button></a>
+
+    {% else %}
+
+    <a href={% url 'reservas' %}><button class="boton-reserva">Reservar</button></a>
+
+    {% endif %}
+</div>
+<br />
+<hr />
+<h2 style="width: 100%; text-align:center;">Tus Reservas</h2>
+
+<p>Número de reservas <b>{{numero}}</b></p>
+<script>
+    $(function () {
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            maxDate: '1Y',
+            showButtonPanel: true,
+            dateFormat: 'dd/mm/yy',
+            closeText: 'Cerrar',
+            prevText: '< Ant',
+            nextText: 'Sig >',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            beforeShowDay: function (day) {
+                var day = day.getDay();
+                if (day == 2 || day == 3 || day == 4 || day == 1) {
+                    return [false, "somecssclass"]
+                } else {
+                    return [true, "someothercssclass"]
+                }
+            }
+            // You can put more options here.
+
+        });
+    });
+</script>
+<div class="fecha">
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" class="datepicker" name="fecha" value="" readonly/>
+        <input type="submit" value="Buscar" />
+    </form>
+</div>
+<div class="lista_reservas_unica">
+    {% if usuarios %}
+    <table>
+        <tr>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Hora
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Teléfono
+            </th>
+        </tr>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>
+                {{usuario.fecha_reserva}}
+            </td>
+            <td>
+                {{usuario.horario}}:00
+            </td>
+            <td>
+                {{usuario.email}}
+            </td>
+            <td>
+                {{usuario.nombre}}
+            </td>
+            <td>
+                {{usuario.telefono}}
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Aun no tienes reservas</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}

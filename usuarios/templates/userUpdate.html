@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Reservas {% endblock %}
+{% block content%}
+<head>
+    <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+</head>
+<div class="form">
+<form action="" method="POST">
+{% csrf_token %}
+{{form.as_p}}
+<button type="submit">Actualizar Usuario</button>
+</form>
+</div>
+{% endblock %}

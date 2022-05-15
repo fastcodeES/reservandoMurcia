@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Reservas {% endblock %}
+{% block content%}
+<head>
+    <link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+<style>
+.contador{
+    width: 100%;
+    text-align: right;
+
+}
+     .lista_reservas_unica {
+            padding: 10px;          
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #form-tareas{
+            display: none;
+        }
+</style>
+</head>
+
+<div>
+<script>
+    function myFunction() {
+  var x = document.getElementById("form-tareas");
+  if (x.style.display === "block") {
+      x.style.display = "none";
+  } else {
+      x.style.display = "block";
+  }
+}</script>
+{% if user.is_staff %}
+
+<button class="" onclick="myFunction()">Crear tarea</button>
+</div>
+<div class="form" id="form-tareas">
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" value="">Guardar</button>
+    </form>
+
+</div>
+
+
+
+<h1>TAREAS({{n_tareas}})</h1>
+
+<br/>
+ <table>
+        <tr>
+            <th>
+                Número
+            </th>
+            <th>
+                Título
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+        {% for tarea in tareas %}
+        <tr>
+            <td>
+                {{forloop.counter}}
+            </td>
+            <td>
+                {{tarea.titulo}}
+            </td>
+            <td>
+                {{tarea.descripcion}}
+            </td>
+            <td>
+                <a href="{% url 'eliminar_tarea' tarea.id %}">Borrar</a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    {% else %}
+    No tienes permisos
+{% endif %}
+{% endblock %}

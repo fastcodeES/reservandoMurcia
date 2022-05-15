@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} RM|Reservas {% endblock %}
+{% block content%}
+<head>
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+<style>
+.contador{
+    width: 100%;
+    text-align: right;
+
+}
+.lista_reservas_unica {
+            padding: 10px;          
+        }
+button {
+ width: 150px;
+ height: 50px;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ background: red;
+ border: none;
+ border-radius: 5px;
+ box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+ background: #e62222;
+}
+
+button, button span {
+ transition: 200ms;
+}
+
+button .text {
+ transform: translateX(35px);
+ color: white;
+ font-weight: bold;
+}
+
+button .icon {
+ position: absolute;
+ border-left: 1px solid #c41b1b;
+ transform: translateX(110px);
+ height: 40px;
+ width: 40px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+button svg {
+ width: 15px;
+ fill: #eee;
+}
+
+button:hover {
+ background: #ff3636;
+}
+
+button:hover .text {
+ color: transparent;
+}
+
+button:hover .icon {
+ width: 150px;
+ border-left: none;
+ transform: translateX(0);
+}
+
+button:focus {
+ outline: none;
+}
+
+button:active .icon svg {
+ transform: scale(0.8);
+}
+</style>
+</head>
+<script type="text/javascript" language="JavaScript"> 
+function AskAndSubmit(t) 
+{ 
+    var answer = confirm("¿Estás segur@ de querer eliminar este usuario?"); 
+    if (answer) 
+    { 
+    t.form.submit(); 
+    } 
+} 
+</script> 
+{% if user.is_staff %}
+<h1>LISTA DE USUARIOS</h1>
+<hr/>
+<div class="contador">
+    <p> Números de usuarios {{n_usuarios}} </p>
+</div>
+<br/>
+        <table>
+        <tr>
+            <th>
+                Número
+            </th>
+            <th>
+                Username
+            </th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>
+                {{forloop.counter}}
+            </td>
+            <td>
+                {{user.username}}
+            </td>
+            <td>
+            <a href="{% url 'modificar-usuario' user.id %}">Modificar Usuario</a>
+            </td>
+            <td>
+            <a href="{% url 'eliminar-usuario' user.id %}" onclick="AskAndSubmit(this)">
+<button class="noselect"><span class="text">Delete</span><span class="icon"><svg viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button></a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    {% else %}
+    No tienes permisos
+    {% endif %}
+{% endblock %}

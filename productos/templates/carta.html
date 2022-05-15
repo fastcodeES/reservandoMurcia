@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block title %} RM|Carta {% endblock %}
+{% load static %}
+
+{% block content%}
+<head>
+<link rel="stylesheet" href="{% static '../static/css/style_carta.css' %}">
+</head>
+
+ <form action="{% url 'carta' %}" method="POST">
+    {% csrf_token %}
+    <!-- <label for="categoria">Categoria : </label> -->
+        <select name="categoria" id="categoria">
+            <option value="TODOS" selected>TODOS</option>
+            <option value="WHISKY">WHISKY</option>
+            <option value="RON">RON</option>
+            <option value="GINEBRA">GINEBRA</option>
+            <option value="VODKA">VODKA</option>
+            <option value="SIN ALCOHOL">SIN ALCOHOL</option>
+        </select>
+        <input type="submit" value="Buscar" > 
+</form>
+<br>
+{% if perms.reservas.add_producto %}
+<a href="{% url 'crear-producto' %}"><button class="crear-producto">Crear Producto</button></a>
+{% endif %}
+<h2 style="text-align: center; font-size: 40px;">{{categoria}}</h2>
+<div class="product_list"> 
+{% if productos %}
+    {% for producto in productos %}
+        <div class="product">  
+        <h4 class="product__title">{{producto.nombre}}</h4>
+        <hr>
+        <p class="product__description"> Ingredientes:  {{producto.descripcion}}<p>
+        <p class="product__price">{{producto.precio}}€</p>
+        {% if perms.reservas.delete_producto %}
+        <a href="{% url 'borrar-producto' producto.nombre%}"><button class="borrar-producto">Eliminar</button></a>
+        {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+<p>Aun no tienes lista de productos</p>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Pacifico&family=Urbanist:wght@300&display=swap');/*========== VARIABLES CSS ==========*/
+
+
+.form{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: none;
+    
+}
+
+.form input {
+    border: 0;
+    width: 95%;
+    height: 30px;
+    margin: 0.5rem;
+    background-color: white;
+    border-bottom: solid 1px #32de84;
+    font-family: 'Urbanist', sans-serif;
+
+  }
+  
+  .form input:focus {
+    background-color: white;
+  }
+
+  textarea{
+    border-color: #32de84;
+    font-family: 'Urbanist', sans-serif;
+    width: 95%;
+    
+
+  }
+
+  textarea:focus{
+    background-color: rgb(255, 255, 255);
+
+  }
+
+  
+  select{
+    height: 60px;
+    width: 95%;
+    text-align: center;
+    background: white;
+    border-radius: 5px;
+    border: none;
+    border-bottom: solid 1px aqua;
+  }
+
+  .form button {
+    padding: 0.5em 1em;
+    border: 2px solid #40AC9D;
+    width: 95%;
+    height: 40px;
+    background: #32de84;
+    cursor: pointer;
+    border-radius: 3em;
+
+  }
+  .form button:hover {
+    background-color: rgb(247, 222, 177);
+  }
+
+  button {
+    padding: 0.5em 1em;
+    border: 2px solid #40AC9D;
+    border-radius: 3em;
+    width: 95%;
+    height: 40px;
+    background: #27d47b;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  button:hover {
+    background-color: rgb(247, 222, 177);
+    
+  }

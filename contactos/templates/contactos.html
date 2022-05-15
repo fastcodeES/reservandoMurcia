@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<head>
+{% block title %} RM|Contacto {% endblock %}
+<link rel="stylesheet" href="{% static 'css/formulario.css' %}">
+</head>
+<body>
+<div class="intro-contactos">
+    <h2>¿Quieres decirnos algo?</h2>
+    <br>
+    Adelante, sin miedo nosotros te contestaremos cuanto antes por correo electrónico.
+</div>
+
+<br/>
+<div class="form"> 
+    {% if mensaje %}
+        <span class="notification">{{mensaje}}</span> 
+    {% endif %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit"  value="">Enviar</button>
+    </form>
+</div>
+<br/>
+<h2>Encuentranos aquí </h2>
+<hr/>
+<div style="width: 100%; text-align: center;">
+    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1NSYaHBpga-gzYi_CVjK2zeX43P9rG7ou&ehbc=2E312F&z=15" height="480"></iframe>
+</div>
+</body>
+
+{% endblock content %}
